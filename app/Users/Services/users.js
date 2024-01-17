@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const boom = require('@hapi/boom');
 
 class UserService {
   constructor() {
@@ -9,7 +10,7 @@ class UserService {
     const limit = 10;
     for (let index = 0; index < limit; index++) {
       this.users.push({
-        id: faker.commerce.isbn(10),
+        id: faker.string.uuid(),
         name: faker.person.fullName(),
         job: faker.person.jobType()
       });
@@ -18,7 +19,7 @@ class UserService {
 
   create(data){
     const newUser={
-        id: faker.commerce.isbn(10),
+        id: faker.string.uuid(),
         ...data
     }
     this.users.push(newUser)
@@ -31,13 +32,16 @@ class UserService {
 
   findOne(id){
     const user= this.users.find(item=>item.id===id);
+    if(!user){
+      throw boom.notFound("User not found");
+    }
     return user;
   }
 
   update(id, changes){
     const index = this.users.findIndex(item=>item.id===id);
     if(index===-1){
-      throw new Error("User not found");
+      throw boom.notFound("User not found");
     }
     const user=this.users[index];
     this.users[index]={...user, ...changes}

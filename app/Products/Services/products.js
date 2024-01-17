@@ -60,7 +60,7 @@ class ProductsService {
         throw boom.notFound("Product not found");
     }
     this.products.splice(index, 1);
-    return {message: 'deleted'}
+    return {message: 'Deleted'}
   }
 
 }
