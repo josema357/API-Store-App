@@ -5,7 +5,7 @@ const {
   createUserDTO,
   updateUserDTO,
   getUserDTO,
-} = require('./../DTO/userDTO');
+} = require('../DTO/userDTO');
 
 const router = express.Router();
 const service = new UserService();

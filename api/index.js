@@ -1,5 +1,5 @@
 const express = require('express');
-const routerAPI = require('./app/routerAPI')
+const routerAPI = require('./app/routerAPI');
 const {logErrors, errorHandler}=require('./Middlewares/errorHandler');
 const {boomErrorHandler}=require('./Middlewares/boomErrorHandler');
 require('dotenv').config()
@@ -24,7 +24,7 @@ app.use(cors(options));
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hello, my server in express');
 });
 

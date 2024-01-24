@@ -5,7 +5,7 @@ const {
   createCategoryDTO,
   updateCategoryDTO,
   getCategoryDTO,
-} = require('./../DTO/categoriesDTO');
+} = require('../DTO/categoriesDTO');
 
 const router = express.Router();
 const service = new CategoriesService();
