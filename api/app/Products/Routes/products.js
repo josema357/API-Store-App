@@ -5,7 +5,7 @@ const {
   createProductDTO,
   updateProductDTO,
   getProductDTO,
-} = require('./../DTO/productsDTO');
+} = require('../DTO/productsDTO');
 
 const router = express.Router();
 const service = new ProductService();
