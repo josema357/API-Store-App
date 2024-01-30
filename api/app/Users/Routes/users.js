@@ -10,9 +10,13 @@ const {
 const router = express.Router();
 const service = new UserService();
 
-router.get('/', (req, res) => {
-  const users = service.findAll();
-  res.json(users);
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await service.findAll();
+    res.json(users)
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id', validatorHandler(getUserDTO, 'params'), (req, res) => {
