@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
+const id = Joi.number();
 const name = Joi.string().min(3).max(40);
 const job = Joi.string().min(3).max(30);
 

@@ -1,18 +1,18 @@
 const express = require('express');
-const UserService = require('../Services/users');
-const { validatorHandler } = require('../../../Middlewares/validatorHandler');
+const UserService = require('../services/users');
+const { validatorHandler } = require('../../Middlewares/validatorHandler');
 const {
   createUserDTO,
   updateUserDTO,
   getUserDTO,
-} = require('../DTO/userDTO');
+} = require('../dto/user.dto');
 
 const router = express.Router();
 const service = new UserService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await service.findAll();
+    const users = await service.find_all();
     res.json(users)
   } catch (error) {
     next(error);
@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', validatorHandler(getUserDTO, 'params'), (req, res) => {
   const { id } = req.params;
-  const user = service.findOne(id);
+  const user = service.find_by_id(parseInt(id));
   res.json(user);
 });
 

@@ -1,11 +1,11 @@
 const express = require('express');
-const CategoriesService = require('../Services/categories');
-const { validatorHandler } = require('./../../../Middlewares/validatorHandler');
+const CategoriesService = require('../services/categories');
+const { validatorHandler } = require('../../Middlewares/validatorHandler');
 const {
   createCategoryDTO,
   updateCategoryDTO,
   getCategoryDTO,
-} = require('../DTO/categoriesDTO');
+} = require('../dto/categories.dto');
 
 const router = express.Router();
 const service = new CategoriesService();

@@ -1,18 +1,22 @@
 const express = require('express');
-const ProductService = require('../Services/products');
-const { validatorHandler } = require('./../../../Middlewares/validatorHandler');
+const ProductService = require('../services/products');
+const { validatorHandler } = require('../../Middlewares/validatorHandler');
 const {
   createProductDTO,
   updateProductDTO,
   getProductDTO,
-} = require('../DTO/productsDTO');
+} = require('../dto/products.dto');
 
 const router = express.Router();
 const service = new ProductService();
 
-router.get('/', (req, res) => {
-  const products = service.findAll();
-  res.json(products);
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await service.find_all();
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id', validatorHandler(getProductDTO, 'params'), (req, res) => {
