@@ -10,9 +10,13 @@ const {
 const router = express.Router();
 const service = new CategoriesService();
 
-router.get('/', (req, res) => {
-  const categories = service.findAll();
-  res.json(categories);
+router.get('/', async (req, res, next) => {
+  try {
+    const categories = await service.find_all();
+    res.json(categories);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id', validatorHandler(getCategoryDTO, 'params'), (req, res) => {

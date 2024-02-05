@@ -22,11 +22,13 @@ const ProductSchema = {
       },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        field: 'created_at',
+        defaultValue: Sequelize.NOW
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        field: 'updated_at',
+        defaultValue: Sequelize.NOW
       }
 }
 

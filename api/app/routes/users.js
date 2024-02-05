@@ -19,29 +19,38 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', validatorHandler(getUserDTO, 'params'), (req, res) => {
-  const { id } = req.params;
-  const user = service.find_by_id(parseInt(id));
-  res.json(user);
+router.get('/:id', validatorHandler(getUserDTO, 'params'), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await service.find_by_id(parseInt(id));
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+  
 });
 
-router.post('/', validatorHandler(createUserDTO, 'body'), (req, res) => {
-  const { body } = req;
-  const user = service.create(body);
-  res.status(201).json(user);
+router.post('/', validatorHandler(createUserDTO, 'body'), async (req, res, next) => {
+  try {
+    const { body } = req;
+    const user = await service.create(body);
+    res.status(201).json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.patch(
   '/:id',
   validatorHandler(getUserDTO, 'params'),
   validatorHandler(updateUserDTO, 'body'),
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       const {
         body,
         params: { id },
       } = req;
-      const user = service.update(id, body);
+      const user = await service.update_user(id, body);
       res.json(user);
     } catch (error) {
       next(error);
@@ -49,12 +58,16 @@ router.patch(
   },
 );
 
-router.delete('/:id', (req, res) => {
-  const {
-    params: { id },
-  } = req;
-  const response = service.delete(id);
-  res.status(200).json(response);
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+    const response = await service.delete(id);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error)
+  }
 });
 
 module.exports = router;

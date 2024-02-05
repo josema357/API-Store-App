@@ -1,17 +1,17 @@
 const Joi = require('joi');
 
-const id = Joi.number();
-const name = Joi.string().min(3).max(40);
-const job = Joi.string().min(3).max(30);
+const id = Joi.number().integer();
+const email = Joi.string().min(10);
+const password = Joi.string().min(8);
 
 const createUserDTO = Joi.object({
-    name : name.required(),
-    job : job.required()
+    email : email.required(),
+    password : password.required()
 })
 
 const updateUserDTO = Joi.object({
-    name : name,
-    job : job
+    email : email,
+    password : password
 })
 
 const getUserDTO = Joi.object({

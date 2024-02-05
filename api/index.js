@@ -4,6 +4,7 @@ const {logErrors, errorHandler}=require('./Middlewares/errorHandler');
 const {boomErrorHandler}=require('./Middlewares/boomErrorHandler');
 require('dotenv').config()
 const cors = require('cors');
+const { ormErrorHandler } = require('./Middlewares/queryErrorHandler');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ routerAPI(app);
 
 //Middlewares
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
