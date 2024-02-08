@@ -19,29 +19,37 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', validatorHandler(getProductDTO, 'params'), (req, res) => {
-  const { id } = req.params;
-  const products = service.findOne(id);
-  res.json(products);
+router.get('/:id', validatorHandler(getProductDTO, 'params'), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const products = await service.find_by_id(id);
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post('/', validatorHandler(createProductDTO, 'body'), (req, res) => {
-  const body = req.body;
-  const newProduct = service.create(body);
-  res.status(201).json(newProduct);
+router.post('/', validatorHandler(createProductDTO, 'body'), async (req, res, next) => {
+  try {
+    const body = req.body;
+    const newProduct = await service.create(body);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.patch(
   '/:id',
   validatorHandler(getProductDTO, 'params'),
   validatorHandler(updateProductDTO, 'body'),
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       const {
         body,
         params: { id },
       } = req;
-      const product = service.update(id, body);
+      const product = await service.update_product(id, body);
       res.json(product);
     } catch (error) {
       next(error);
@@ -49,10 +57,14 @@ router.patch(
   },
 );
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  const response = service.delete(id);
-  res.status(200).json(response);
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await service.delete(id);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

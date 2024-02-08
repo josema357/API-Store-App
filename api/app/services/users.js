@@ -1,23 +1,7 @@
-const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
-
 const { models } = require('../../libs/sequelize');
 
 class UserService {
-  constructor() {
-    this.users = [];
-    this.generate();
-  }
-  generate() {
-    const limit = 10;
-    for (let index = 0; index < limit; index++) {
-      this.users.push({
-        id: faker.string.uuid(),
-        name: faker.person.fullName(),
-        job: faker.person.jobType()
-      });
-    }
-  }
 
   async create(data){
     const newUser= await models.User.create(data);

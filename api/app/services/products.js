@@ -1,33 +1,10 @@
-const { faker } = require('@faker-js/faker');
 const  boom = require('@hapi/boom');
-
 const { models } = require('../../libs/sequelize');
 
 class ProductsService {
-  constructor() {
-    this.products = [];
-    this.generate();
-  }
 
-  generate() {
-    const limit = 10;
-    for (let index = 0; index < limit; index++) {
-      this.products.push({
-        id: faker.string.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.url(),
-        isBlock: faker.datatype.boolean()
-      });
-    }
-  }
-
-  create(data) {
-    const newProduct = {
-        id: faker.string.uuid(),
-        ...data
-    }
-    this.products.push(newProduct);
+  async create(data) {
+    const newProduct = await models.Product.create(data);
     return newProduct;
   }
 
@@ -36,34 +13,27 @@ class ProductsService {
     return data;
   }
 
-  findOne(id) {
-    const product = this.products.find(item => item.id === id);
+  async find_by_id(id) {
+    const product = await models.Product.findByPk(id)
     if(!product){
       throw boom.notFound("Product not found");
-    }
-    if(product.isBlock){
-      throw boom.conflict("Product is block");
     }
     return product;
   }
 
-  update(id, changes){
-    const index = this.products.findIndex(item=>item.id === id);
-    if(index===-1){
-        throw boom.notFound("Product not found");
-    }
-    const product = this.products[index]
-    this.products[index] = {...product, ...changes};
-    return this.products[index];
+  async update_product(id, changes){
+    const product = await this.find_by_id(id);
+    const response = await product.update(changes);
+    return response;
   }
 
-  delete(id) {
-    const index = this.products.findIndex(item=>item.id === id);
-    if(index===-1){
-        throw boom.notFound("Product not found");
+  async delete(id) {
+    const product = await this.find_by_id(id);
+    await product.destroy();
+    return {
+      product,
+      message: "Product Deleted"
     }
-    this.products.splice(index, 1);
-    return {message: 'Deleted'}
   }
 
 }

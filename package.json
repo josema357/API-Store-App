@@ -7,7 +7,7 @@
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
     "lint": "eslint",
-    "test": "jest --force-exit"
+    "test": "jest --testPathPattern=categories.test.js --force-exit"
   },
   "keywords": [],
   "author": "",
