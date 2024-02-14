@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
+const { CATEGORY_TABLE } = require('./category.model');
 
 const PRODUCT_TABLE = 'products';
 const ProductSchema = {
@@ -14,7 +15,7 @@ const ProductSchema = {
   },
   description: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: false,
   },
   price: {
     type: DataTypes.FLOAT,
@@ -34,10 +35,23 @@ const ProductSchema = {
     field: 'updated_at',
     defaultValue: Sequelize.NOW,
   },
+  categoryId: {
+    field: 'category_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CATEGORY_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
 };
 
 class Product extends Model {
-  static associate() {}
+  static associate(models) {
+    this.belongsTo(models.Category, { as: 'category' });
+  }
   static config(sequelize) {
     return {
       sequelize,

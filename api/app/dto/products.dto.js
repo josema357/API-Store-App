@@ -5,19 +5,22 @@ const name= Joi.string().min(3).max(50);
 const description = Joi.string();
 const price = Joi.number().integer().min(1);
 const image = Joi.string().uri();
+const categoryId = Joi.number().integer();
 
 const createProductDTO = Joi.object({
     name: name.required(),
-    description: description,
+    description: description.required(),
     price: price.required(),
-    image: image.required()
+    image: image.required(),
+    categoryId: categoryId.required()
 })
 
 const updateProductDTO = Joi.object({
     name: name,
     description: description,
     price: price,
-    image: image
+    image: image,
+    categoryId: categoryId
 })
 
 const getProductDTO = Joi.object({

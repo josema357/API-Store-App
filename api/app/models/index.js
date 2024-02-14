@@ -15,6 +15,8 @@ function setupModels(sequelize){
 
     Customer.associate(sequelize.models);
     User.associate(sequelize.models);
+    Category.associate(sequelize.models);
+    Product.associate(sequelize.models);
 }
 
 module.exports = setupModels;
