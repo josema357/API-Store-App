@@ -22,8 +22,7 @@ const createCustomerDTO = Joi.object({
 const updateCustomerDTO = Joi.object({
     name : name,
     lastName : lastName,
-    phone: phone,
-    userId: userId
+    phone: phone
 })
 
 const getCustomerDTO = Joi.object({

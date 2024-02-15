@@ -37,7 +37,7 @@ class CustomerService {
     await customer.destroy();
     return {
       customer,
-      message: "User Deleted"
+      message: "Customer Deleted"
     }
   }
 }

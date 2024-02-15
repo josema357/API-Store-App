@@ -25,7 +25,8 @@ describe("POST/users",()=>{
     test("should respond with a 201 status code and create a new user", async()=>{
         const userData = {
             email: "testnew@gmail.com",
-            password: "wsedtgyh89"
+            password: "wsedtgyh89",
+            role: "admintest"
         };
         const response = await request(app).post('/api/v1/users').send(userData);
         expect(response.statusCode).toBe(201);
@@ -40,7 +41,8 @@ describe("PATCH/users", ()=>{
     test("should respond with a 200 status code and update a user by id", async ()=>{
         const updateUserData={
             email: "testUpdate@mail.com",
-            password: "123456789"
+            password: "123456789",
+            role: "customertest"
         };
         const response = await request(app).patch(`/api/v1/users/${userId}`).send(updateUserData);
         expect(response.statusCode).toBe(200);

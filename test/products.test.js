@@ -27,7 +27,8 @@ describe("POST/products", ()=>{
             name:"new product",
             description:"description description description description description description description description",
             price: 250,
-            image:"https://3.bp.blogspot.com/-JxYjZjRXIh4/VDWJoJPtYuI/AAAAAAACVDM/C9r2wraqtlQ/s1600/paisajes%2Bnaturales%2Bfotos%2Bnuevas%2B(10).jpg"
+            image:"https://3.bp.blogspot.com/-JxYjZjRXIh4/VDWJoJPtYuI/AAAAAAACVDM/C9r2wraqtlQ/s1600/paisajes%2Bnaturales%2Bfotos%2Bnuevas%2B(10).jpg",
+            categoryId: 1
         }
         const response = await request(app).post("/api/v1/products").send(productData);
         expect(response.statusCode).toBe(201);
