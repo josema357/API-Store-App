@@ -5,14 +5,15 @@ const {
   createProductDTO,
   updateProductDTO,
   getProductDTO,
+  queryProductDTO
 } = require('../dto/products.dto');
 
 const router = express.Router();
 const service = new ProductService();
 
-router.get('/', async (req, res, next) => {
+router.get('/', validatorHandler(queryProductDTO, 'query'), async (req, res, next) => {
   try {
-    const products = await service.find_all();
+    const products = await service.find_all(req.query);
     res.json(products);
   } catch (error) {
     next(error);

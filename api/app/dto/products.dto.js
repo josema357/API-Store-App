@@ -6,6 +6,8 @@ const description = Joi.string();
 const price = Joi.number().integer().min(1);
 const image = Joi.string().uri();
 const categoryId = Joi.number().integer();
+const offset = Joi.number().integer();
+const limit = Joi.number().integer();
 
 const createProductDTO = Joi.object({
     name: name.required(),
@@ -27,4 +29,9 @@ const getProductDTO = Joi.object({
     id: id.required(),
 })
 
-module.exports={createProductDTO, updateProductDTO, getProductDTO}
+const queryProductDTO = Joi.object({
+    limit: limit,
+    offset: offset
+})
+
+module.exports={createProductDTO, updateProductDTO, getProductDTO, queryProductDTO}

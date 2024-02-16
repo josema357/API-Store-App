@@ -18,7 +18,7 @@ class OrderService {
 
   async find_all() {
     const data = await models.Order.findAll({
-      include: ['customer'],
+      include: ['customer', 'items'],
     });
     return data;
   }
