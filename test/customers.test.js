@@ -24,11 +24,11 @@ describe("GET/customers", ()=>{
 describe("POST/customers", ()=>{
     test("should respond with a 201 status code and create a new customer", async()=>{
         const customerData = {
-            name : "customertest",
-            lastName : "testcustomer",
+            name : "customertest2",
+            lastName : "testcustomer2",
             phone: "987452369",
             user: {
-                email: "test3@gmail.com",
+                email: "test0123@gmail.com",
                 password: "derft589652"
             }
         }
