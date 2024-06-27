@@ -5,6 +5,7 @@ const {boomErrorHandler}=require('./Middlewares/boomErrorHandler');
 require('dotenv').config()
 const cors = require('cors');
 const { ormErrorHandler } = require('./Middlewares/queryErrorHandler');
+const { checkApiKey } = require("./Middlewares/authHandler");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +28,9 @@ app.use(express.json());
 
 app.get('/api', (req, res) => {
   res.send('Hello, my server in express');
+});
+app.get('/auth', checkApiKey, (req, res) => {
+  res.send('New route');
 });
 
 routerAPI(app);

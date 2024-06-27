@@ -8,6 +8,7 @@
 - [`Jest`](https://jestjs.io/)
 - [`SuperTest`](https://www.npmjs.com/package/supertest)
 - [`Sequelize`](https://sequelize.org/)
+- [`Docker`](https://www.docker.com/)
 
 ### Description
 
