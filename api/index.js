@@ -26,6 +26,9 @@ app.use(cors(options));
 
 app.use(express.json());
 
+//Add Auth Strategies
+require("./auth")
+
 app.get('/api', (req, res) => {
   res.send('Hello, my server in express');
 });

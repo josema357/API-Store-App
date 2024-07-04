@@ -5,6 +5,7 @@ class UserService {
 
   async create(data){
     const newUser= await models.User.create(data);
+    delete newUser.dataValues.password;
     return newUser;
   }
 
@@ -21,6 +22,13 @@ class UserService {
       throw boom.notFound("User not found");
     }
     return user;
+  }
+
+  async find_by_email(email){
+    const data = await models.User.findOne({
+      where: { email },
+    });
+    return data;
   }
 
   async update_user(id, changes){
