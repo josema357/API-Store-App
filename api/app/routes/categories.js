@@ -6,11 +6,16 @@ const {
   updateCategoryDTO,
   getCategoryDTO,
 } = require('../dto/categories.dto');
+const passport = require("passport");
+const { checkRoles } = require('../../Middlewares/authHandler')
 
 const router = express.Router();
 const service = new CategoriesService();
 
-router.get('/', async (req, res, next) => {
+router.get('/', 
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin', 'customer'), 
+  async (req, res, next) => {
   try {
     const categories = await service.find_all();
     res.json(categories);
@@ -19,7 +24,11 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', validatorHandler(getCategoryDTO, 'params'), async(req, res, next) => {
+router.get('/:id', 
+  passport.authenticate('jwt', {session: false}),
+  checkRoles('admin', 'customer'), 
+  validatorHandler(getCategoryDTO, 'params'), 
+  async(req, res, next) => {
   try {
     const { id } = req.params;
     const product = await service.find_by_id(id);
@@ -29,7 +38,11 @@ router.get('/:id', validatorHandler(getCategoryDTO, 'params'), async(req, res, n
   }
 });
 
-router.post('/', validatorHandler(createCategoryDTO, 'body'), async (req, res, next) => {
+router.post('/', 
+  passport.authenticate('jwt', {session: false}), 
+  checkRoles('admin'),
+  validatorHandler(createCategoryDTO, 'body'), 
+  async (req, res, next) => {
   try {
     const { body } = req;
     const category = await service.create(body);
