@@ -9,7 +9,7 @@ const service = new AuthService();
 router.post('/login', passport.authenticate('local', {session: false}), async (req, res, next) => {
   try {
     const user = req.user;
-    const response = service.signToken(user);
+    const response = await service.signToken(user);
     res.json(response);
   } catch (error) {
     next(error);
@@ -20,6 +20,16 @@ router.post('/recovery', async (req, res, next) => {
   try {
     const { email } = req.body;
     const response = await service.sendRecovery(email);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/reset-password', async (req, res, next) => {
+  try {
+    const { token, newPassword } = req.body;
+    const response = await service.resetPassword(token, newPassword);
     res.json(response);
   } catch (error) {
     next(error);

@@ -4,6 +4,7 @@ const id = Joi.number().integer();
 const email = Joi.string().email();
 const password = Joi.string().min(8);
 const role = Joi.string();
+const recovery_token = Joi.string();
 
 const createUserDTO = Joi.object({
     email : email.required(),
@@ -14,7 +15,8 @@ const createUserDTO = Joi.object({
 const updateUserDTO = Joi.object({
     email : email,
     password : password,
-    role: role
+    role: role,
+    recovery_token: recovery_token
 })
 
 const getUserDTO = Joi.object({

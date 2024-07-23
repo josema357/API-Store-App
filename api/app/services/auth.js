@@ -37,10 +37,12 @@ class AuthService {
     if (!user) {
       throw boom.unauthorized();
     }
-    const payload = {sub: user.id};
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: "5min"});
-    const link = `http://myfrontend.com/recovery?token=${token}`
-    await service.update_user(user.id, {recoveryToken: token})
+    const payload = { sub: user.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '15min'
+    });
+    const link = `http://myfrontend.com/recovery?token=${token}`;
+    await service.update_user(user.id, { recoveryToken: token });
     const mail = {
       from: `"Node App 👻" <${process.env.SMTP_EMAIL}>`, // sender address
       to: `${user.email}`, // list of receivers
@@ -49,6 +51,21 @@ class AuthService {
     };
     const response = await this.sendMail(mail);
     return response;
+  }
+
+  async resetPassword(token, newPassword) {
+    try {
+      const payload = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await service.find_by_id(payload.sub);
+      if(user.recoveryToken !== token){
+        throw boom.unauthorized();
+      }
+      const hash = await bcrypt.hash(newPassword, 10);
+      await service.update_user(user.id, { recoveryToken: null, password: hash });
+      return { message: "updated password"}
+    } catch (error) {
+      throw boom.unauthorized();
+    }
   }
 
   async sendMail(infoMail) {

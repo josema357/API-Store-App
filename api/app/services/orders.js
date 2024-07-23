@@ -3,7 +3,6 @@ const { models } = require('../../libs/sequelize');
 
 class OrderService {
   async create(data) {
-    console.log(data)
     const customer = await models.Customer.findByPk(data.customerId);
     if(!customer){
       throw boom.notFound('Customer not found');
