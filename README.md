@@ -24,4 +24,4 @@ This project is part of platzi course "Backend con Node.js: Base de Datos con Po
 
 ### Diagram
 
-<img src="" alt=""/>
+<img src="./assets/diagram.png" alt=""/>
