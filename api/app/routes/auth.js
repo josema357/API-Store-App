@@ -9,7 +9,7 @@ const service = new AuthService();
 router.post('/login', passport.authenticate('local', {session: false}), async (req, res, next) => {
   try {
     const user = req.user;
-    const response = await service.signToken(user);
+    const response = service.signToken(user);
     res.json(response);
   } catch (error) {
     next(error);
@@ -19,7 +19,7 @@ router.post('/login', passport.authenticate('local', {session: false}), async (r
 router.post('/recovery', async (req, res, next) => {
   try {
     const { email } = req.body;
-    const response = await service.sendMailer(email);
+    const response = await service.sendRecovery(email);
     res.json(response);
   } catch (error) {
     next(error);
